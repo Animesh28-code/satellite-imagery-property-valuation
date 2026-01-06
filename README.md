@@ -30,6 +30,7 @@ The motivation is to capture environmental and neighborhood context (green cover
 ---
 
 ## Project Structure
+```text
 ├── notebooks/
 │ ├── preprocessing.ipynb
 │ └── model_training.ipynb
@@ -107,7 +108,7 @@ The PCA-based multimodal RandomForest model achieved the best performance by red
 
 ## Environment Setup
 
-```bash
+
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
