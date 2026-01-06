@@ -1,0 +1,174 @@
+# Satellite Imagery-Based Property Valuation
+
+## Overview
+This project builds a **multimodal regression pipeline** to predict residential property prices by combining traditional tabular housing features with **satellite imagery**.
+
+The motivation is to capture environmental and neighborhood context (green cover, road density, water proximity) that is not fully represented by numerical attributes alone.
+
+---
+
+## Objective
+- Predict house prices using tabular + satellite image data
+- Programmatically fetch satellite images using latitude and longitude
+- Extract visual features using a CNN
+- Fuse image embeddings with tabular features
+- Compare tabular-only vs multimodal models
+
+---
+
+## Dataset
+
+### Tabular Data
+- Bedrooms, bathrooms, sqft_living, sqft_lot, floors, waterfront, etc.
+- Latitude and longitude used for image retrieval
+- Target variable: **price**
+
+### Visual Data
+- Satellite images fetched using **Mapbox Static Images API**
+- Images captured at zoom level 18 (224×224)
+
+---
+
+## Project Structure
+├── data_fetcher.py
+├── preprocessing.ipynb
+├── model_training.ipynb
+├── submission_rf_pca.csv
+├── images/
+│ ├── train/
+│ └── test/
+└── README.md
+
+---
+
+## Methodology
+
+### 1. Image Acquisition
+- Satellite images fetched using latitude and longitude
+- Stored locally for training and inference
+
+### 2. Feature Engineering
+- Tabular features cleaned and normalized
+- Image features extracted using **ResNet18**
+- 512-dimensional embeddings reduced to 64 using PCA
+
+### 3. Multimodal Fusion
+- Tabular features concatenated with PCA-reduced image embeddings
+- Final feature vector used for regression
+
+---
+
+## Models Used
+- RandomForest Regressor
+- XGBoost Regressor
+
+---
+
+## Results
+
+| Model | RMSE | R² |
+|------|------|----|
+| Tabular Only / Initial Multimodal | 232,377.74 | 0.6829 |
+| Multimodal RF | 232,377.74 | 0.6829 |
+| **Multimodal RF + PCA** | **199,669.93** | **0.7659** |
+
+The PCA-based multimodal RandomForest model achieved the best performance by reducing noise in image embeddings and improving generalization.
+
+---
+
+## Requirements
+- Python 3.9+
+- NumPy
+- Pandas
+- Scikit-learn
+- PyTorch
+- torchvision
+- PIL / OpenCV
+- XGBoost
+- Matplotlib
+- Seaborn
+
+---
+
+## How to Run
+
+### Step 1: Fetch Satellite Images
+```bash
+python data_fetcher.py
+## Step 2: Data Preprocessing
+
+Run `preprocessing.ipynb` to:
+
+- Clean and normalize tabular features  
+- Handle missing values  
+- Align satellite images with property IDs  
+- Prepare data for multimodal fusion  
+
+---
+
+## Step 3: Model Training
+
+Run `model_training.ipynb` to:
+
+- Train tabular-only baseline models  
+- Train multimodal models using tabular + image data  
+- Apply PCA on image embeddings  
+- Evaluate model performance using **RMSE** and **R²**  
+
+---
+
+## Step 4: Generate Predictions
+
+- Final predictions are saved as:
+submission_rf_pca.csv
+
+---
+
+## Model Explainability
+
+Satellite image embeddings allow the model to learn visual cues such as:
+
+- Vegetation density  
+- Road networks  
+- Proximity to water bodies  
+
+Grad-CAM based explainability can be applied to visualize image regions contributing most to property price prediction.
+
+Due to time and computational constraints, Grad-CAM analysis is proposed as a **future enhancement**.
+
+---
+
+## Limitations
+
+- Satellite images provide limited temporal information  
+- Image resolution may miss fine-grained property details  
+- Model performance depends on accuracy of location coordinates  
+- Grad-CAM visual explanations were not fully implemented  
+
+---
+
+## Future Work
+
+- Implement Grad-CAM visualizations for interpretability  
+- Explore deeper CNN architectures  
+- Use temporal satellite imagery for trend analysis  
+- Deploy the model as a web-based valuation tool  
+
+---
+
+## Submission
+
+The final prediction file (`submission_rf_pca.csv`) was uploaded to **Kaggle** for validation.
+
+- Format verified: `id, price`  
+- Submission accepted successfully  
+
+Screenshots of submission confirmation are included in the project report.
+
+---
+
+## Conclusion
+
+This project demonstrates that incorporating satellite imagery significantly improves real estate price prediction.
+
+PCA-enhanced multimodal models achieved the best performance, highlighting the importance of environmental and neighborhood context in property valuation.
