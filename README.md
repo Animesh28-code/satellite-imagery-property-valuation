@@ -45,7 +45,7 @@ The motivation is to capture environmental and neighborhood context (green cover
 ---
 
 ## Repository Notes
-
+```md
 Due to GitHub file size limits, the following artifacts are **not tracked in this repository**:
 
 - Raw satellite images (`images/`)
