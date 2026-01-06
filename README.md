@@ -218,3 +218,7 @@ submission_rf_pca.csv
 - This project demonstrates that incorporating satellite imagery significantly improves real estate price prediction.
 
 - PCA-enhanced multimodal models achieved the best performance, highlighting the importance of environmental and neighborhood context in property valuation.
+## Project Report
+
+📄 **Full Project Report (PDF):**  
+[Satellite Imagery-Based Property Valuation Report](report/Satellite Imagery.pdf)
